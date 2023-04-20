@@ -45,8 +45,8 @@ static ssize_t procfile_write(struct file *file, const char __user *buff,
   data_to_write[(entry_len < MAX_SINGLE_ENTRY) ? entry_len
                                                : MAX_SINGLE_ENTRY - 1] = '\0';
   procfs_buffer_size = strlen(procfs_buffer) + strlen(data_to_write);
-  procfs_buffer =
-      (char *)krealloc(procfs_buffer, procfs_buffer_size, GFP_KERNEL);
+  procfs_buffer = (char *)krealloc(
+      procfs_buffer, procfs_buffer_size * sizeof(char), GFP_KERNEL);
   if (NULL == procfs_buffer) {
     pr_alert("Error: could not allocate memory");
     return -ENOMEM;
